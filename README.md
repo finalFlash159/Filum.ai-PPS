@@ -894,20 +894,50 @@ The Filum.ai Pain Point Solution Agent processes input through a sequential data
 
 ## 🔍 Matching Examples
 
-### Example 1: Contact Center Performance
-**Input**: "contact center performance dashboard"
-**Top Match**: Contact Center Performance Insights (87% confidence)
-**Reasoning**: Strong semantic match with exact keyword alignment
+## 🔍 Real-World Examples
 
-### Example 2: Customer Feedback
-**Input**: "collecting customer feedback efficiently"  
-**Top Match**: Automated Post-Purchase Surveys (92% confidence)
-**Reasoning**: Perfect intent match with feedback collection domain
+### Example 1: Customer Feedback Collection Challenge
 
-### Example 3: Agent Efficiency
-**Input**: "improve call center agent productivity"
-**Top Match**: AI Agent for FAQ (78% confidence)
-**Reasoning**: Domain match with productivity improvement benefits
+**Business Challenge**: 
+*"We're struggling to collect customer feedback consistently after a purchase"*
+
+**System Analysis & Recommendations**:
+
+![API Request](solution1_1.png)
+*API request showing the pain point analysis*
+
+![Results](solution1_2.png)
+*System recommendations with confidence scores and detailed reasoning*
+
+
+---
+### Example 2: Survey Data Analysis Bottleneck
+
+**Business Challenge**: 
+*"Manually analyzing thousands of open-ended survey responses for common themes is too time-consuming"*
+
+**System Analysis & Recommendations**:
+
+![API Request](solution2_1.png)
+*Pain point analysis for survey data processing challenge*
+
+![Results](solution2_2.png)
+*AI-powered solutions for automated survey analysis and theme extraction*
+
+
+---
+
+### Additional Examples
+
+**Contact Center Performance**: 
+- Input: "contact center performance dashboard"
+- Top Match: Contact Center Performance Insights (87% confidence)
+- Reasoning: Strong semantic match with exact keyword alignment
+
+**Agent Efficiency**: 
+- Input: "improve call center agent productivity"
+- Top Match: AI Agent for FAQ (78% confidence)
+- Reasoning: Domain match with productivity improvement benefits
 
 ## 📁 Project Structure
 

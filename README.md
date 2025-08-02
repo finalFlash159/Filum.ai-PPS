@@ -747,10 +747,10 @@ curl -X POST "http://localhost:8000/analyze-pain-point" \
 
 **System Analysis & Recommendations**:
 
-![API Request](solution1_1.png)
+![API Request](assets/solution1_1.png)
 *API request showing the pain point analysis*
 
-![Results](solution1_2.png)
+![Results](assets/solution1_2.png)
 *System recommendations with confidence scores and detailed reasoning*
 
 
@@ -762,10 +762,10 @@ curl -X POST "http://localhost:8000/analyze-pain-point" \
 
 **System Analysis & Recommendations**:
 
-![API Request](solution2_1.png)
+![API Request](assets/solution2_1.png)
 *Pain point analysis for survey data processing challenge*
 
-![Results](solution2_2.png)
+![Results](assets/solution2_2.png)
 *AI-powered solutions for automated survey analysis and theme extraction*
 
 

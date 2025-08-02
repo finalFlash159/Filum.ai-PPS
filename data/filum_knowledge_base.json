@@ -1,0 +1,352 @@
+{
+  "filum_features": [
+    {
+      "id": "voc-surveys",
+      "name": "Automated Post-Purchase Surveys",
+      "category": "Voice of Customer",
+      "subcategory": "Surveys",
+      "description": "Design and deploy surveys automatically across Web, Mobile, Zalo, SMS, Email, QR, POS after customer transactions",
+      "pain_points_addressed": [
+        "collecting customer feedback consistently",
+        "post-purchase feedback",
+        "survey automation",
+        "feedback collection across channels",
+        "consistent customer feedback"
+      ],
+      "keywords": [
+        "survey", "feedback", "post-purchase", "automatic", "collection", 
+        "email", "sms", "mobile", "web", "zalo", "qr", "pos"
+      ],
+      "benefits": [
+        "Automatic trigger after transactions",
+        "Multi-channel deployment",
+        "Consistent feedback collection",
+        "Real-time response tracking"
+      ],
+      "use_cases": [
+        "E-commerce post-purchase feedback",
+        "Service completion surveys",
+        "Product satisfaction measurement"
+      ]
+    },
+    {
+      "id": "ai-inbox-faq",
+      "name": "AI Agent for FAQ & First Response",
+      "category": "AI Customer Service",
+      "subcategory": "AI Inbox",
+      "description": "AI-powered contact center where AI agents handle repetitive questions and collaborate with human agents",
+      "pain_points_addressed": [
+        "support agents overwhelmed",
+        "high volume repetitive questions",
+        "FAQ automation",
+        "first response automation",
+        "agent workload reduction"
+      ],
+      "keywords": [
+        "ai agent", "faq", "automation", "repetitive", "support", 
+        "inbox", "first response", "chatbot", "deflection"
+      ],
+      "benefits": [
+        "Instant answers to common queries",
+        "Reduces agent workload",
+        "24/7 availability",
+        "Seamless escalation to humans"
+      ],
+      "use_cases": [
+        "Customer support automation",
+        "FAQ handling",
+        "Initial query triage"
+      ]
+    },
+    {
+      "id": "journey-experience-analysis",
+      "name": "Customer Journey Experience Analysis",
+      "category": "Insights",
+      "subcategory": "Experience",
+      "description": "Analyze customer experiences across touchpoints and channels with detailed topic analysis to identify friction points",
+      "pain_points_addressed": [
+        "unclear customer touchpoint issues",
+        "friction point identification",
+        "journey mapping",
+        "touchpoint analysis",
+        "customer experience insight"
+      ],
+      "keywords": [
+        "journey", "touchpoint", "friction", "analysis", "experience", 
+        "insights", "mapping", "channels", "pain points"
+      ],
+      "benefits": [
+        "Identifies specific friction points",
+        "Cross-touchpoint analysis",
+        "Data-driven insights",
+        "Journey optimization recommendations"
+      ],
+      "use_cases": [
+        "Customer journey optimization",
+        "Friction point analysis",
+        "Experience improvement"
+      ]
+    },
+    {
+      "id": "customer-360-profile",
+      "name": "Customer Profile with Interaction History",
+      "category": "Customer 360",
+      "subcategory": "Customers",
+      "description": "Comprehensive customer view consolidating all touchpoints and past interactions for complete customer understanding",
+      "pain_points_addressed": [
+        "single view of customer",
+        "scattered customer data",
+        "interaction history tracking",
+        "customer context lacking",
+        "fragmented customer information"
+      ],
+      "keywords": [
+        "customer 360", "profile", "history", "interactions", "single view", 
+        "consolidated", "touchpoints", "comprehensive"
+      ],
+      "benefits": [
+        "Complete customer history",
+        "Unified customer view",
+        "Better agent context",
+        "Personalized service"
+      ],
+      "use_cases": [
+        "Customer service context",
+        "Sales interaction history",
+        "Support case management"
+      ]
+    },
+    {
+      "id": "ai-topic-sentiment-analysis",
+      "name": "AI-Powered Topic & Sentiment Analysis",
+      "category": "Voice of Customer",
+      "subcategory": "Conversations",
+      "description": "Automatically extract key topics and sentiment from text feedback, conversations, and survey responses",
+      "pain_points_addressed": [
+        "manual feedback analysis time consuming",
+        "sentiment tracking difficulty",
+        "topic extraction manual work",
+        "feedback processing overwhelming",
+        "conversation analysis lacking"
+      ],
+      "keywords": [
+        "ai analysis", "topic extraction", "sentiment", "automatic", "text analysis", 
+        "feedback analysis", "conversation analysis", "themes"
+      ],
+      "benefits": [
+        "Automatic theme extraction",
+        "Real-time sentiment tracking",
+        "Saves manual analysis time",
+        "Identifies emerging issues"
+      ],
+      "use_cases": [
+        "Survey response analysis",
+        "Social media monitoring",
+        "Customer feedback processing"
+      ]
+    },
+    {
+      "id": "voc-reviews-aggregation",
+      "name": "Multi-Platform Review Aggregation",
+      "category": "Voice of Customer",
+      "subcategory": "Reviews",
+      "description": "Aggregate and analyze reviews from various platforms and channels for comprehensive reputation management",
+      "pain_points_addressed": [
+        "reviews scattered across platforms",
+        "reputation monitoring difficulty",
+        "review response coordination",
+        "platform-specific feedback silos",
+        "comprehensive review analysis missing"
+      ],
+      "keywords": [
+        "reviews", "aggregation", "platforms", "reputation", "monitoring", 
+        "analysis", "social media", "feedback"
+      ],
+      "benefits": [
+        "Centralized review management",
+        "Cross-platform insights",
+        "Automated sentiment tracking",
+        "Response coordination"
+      ],
+      "use_cases": [
+        "Online reputation management",
+        "Product feedback analysis",
+        "Brand sentiment monitoring"
+      ]
+    },
+    {
+      "id": "ticket-management-system",
+      "name": "Comprehensive Ticket Management",
+      "category": "AI Customer Service",
+      "subcategory": "Tickets",
+      "description": "Advanced ticket management system with AI-powered routing, prioritization, and resolution tracking",
+      "pain_points_addressed": [
+        "ticket routing inefficient",
+        "priority assignment manual",
+        "resolution tracking lacking",
+        "agent assignment suboptimal",
+        "ticket workflow disorganized"
+      ],
+      "keywords": [
+        "tickets", "management", "routing", "prioritization", "tracking", 
+        "resolution", "workflow", "assignment"
+      ],
+      "benefits": [
+        "Intelligent ticket routing",
+        "Priority-based assignment",
+        "Resolution time tracking",
+        "Performance analytics"
+      ],
+      "use_cases": [
+        "Customer support management",
+        "Issue tracking",
+        "Agent performance monitoring"
+      ]
+    },
+    {
+      "id": "automation-workflows",
+      "name": "AI & Automation Workflows",
+      "category": "AI & Automation",
+      "subcategory": "Settings",
+      "description": "Create automated workflows for customer engagement, follow-ups, and process optimization using AI",
+      "pain_points_addressed": [
+        "manual processes time consuming",
+        "follow-up consistency issues",
+        "workflow automation lacking",
+        "process optimization needed",
+        "engagement automation missing"
+      ],
+      "keywords": [
+        "automation", "workflows", "ai", "processes", "engagement", 
+        "follow-up", "optimization", "efficiency"
+      ],
+      "benefits": [
+        "Automated customer engagement",
+        "Consistent follow-up processes",
+        "Reduced manual work",
+        "Scalable operations"
+      ],
+      "use_cases": [
+        "Customer retention campaigns",
+        "Product promotion",
+        "Loyalty programs"
+      ]
+    },
+    {
+      "id": "operational-performance",
+      "name": "Operational Performance Monitoring",
+      "category": "Insights",
+      "subcategory": "Operation",
+      "description": "Monitor performance of surveys, engagement campaigns, contact center, and tickets with detailed analytics",
+      "pain_points_addressed": [
+        "performance visibility lacking",
+        "operational metrics tracking",
+        "campaign effectiveness measurement",
+        "contact center performance",
+        "survey performance analysis"
+      ],
+      "keywords": [
+        "performance", "monitoring", "analytics", "operational", "metrics", 
+        "tracking", "campaigns", "effectiveness"
+      ],
+      "benefits": [
+        "Real-time performance tracking",
+        "Comprehensive analytics",
+        "Campaign effectiveness insights",
+        "Operational optimization"
+      ],
+      "use_cases": [
+        "Performance tracking",
+        "Business intelligence",
+        "Customer analytics"
+      ]
+    },
+    {
+      "id": "contact-center-insights",
+      "name": "Contact Center Performance Insights",
+      "category": "Insights",
+      "subcategory": "Contact Center",
+      "description": "Advanced analytics for contact center operations including agent performance, call patterns, and customer satisfaction metrics",
+      "pain_points_addressed": [
+        "agent performance visibility",
+        "call center optimization",
+        "customer satisfaction tracking",
+        "operational inefficiencies",
+        "performance benchmarking"
+      ],
+      "keywords": [
+        "contact center", "agent performance", "analytics", "optimization", "satisfaction", 
+        "metrics", "operations", "insights"
+      ],
+      "benefits": [
+        "Agent performance optimization",
+        "Customer satisfaction improvement",
+        "Operational efficiency gains",
+        "Data-driven decision making"
+      ],
+      "use_cases": [
+        "Agent coaching and development",
+        "Contact center optimization",
+        "Customer experience improvement"
+      ]
+    },
+    {
+      "id": "voc-journeys",
+      "name": "Customer Journey Management",
+      "category": "Voice of Customer", 
+      "subcategory": "Journeys",
+      "description": "Manage customer journeys and touchpoints across all channels to optimize customer experience and identify improvement opportunities",
+      "pain_points_addressed": [
+        "journey mapping complexity",
+        "touchpoint optimization",
+        "customer path unclear",
+        "journey analytics missing",
+        "experience optimization needed"
+      ],
+      "keywords": [
+        "journey", "touchpoints", "mapping", "customer path", "experience", 
+        "optimization", "channels", "lifecycle"
+      ],
+      "benefits": [
+        "Complete journey visibility",
+        "Touchpoint optimization insights",
+        "Customer experience improvement",
+        "Journey analytics and reporting"
+      ],
+      "use_cases": [
+        "Customer journey mapping",
+        "Touchpoint optimization",
+        "Experience improvement planning"
+      ]
+    },
+    {
+      "id": "customer-360-engagement",
+      "name": "Customer Engagement Campaigns",
+      "category": "Customer 360",
+      "subcategory": "Engagement", 
+      "description": "Run targeted engagement campaigns to engage customers based on their profiles, behaviors, and preferences",
+      "pain_points_addressed": [
+        "customer engagement lacking",
+        "campaign targeting ineffective",
+        "personalization missing",
+        "engagement automation needed",
+        "campaign performance tracking"
+      ],
+      "keywords": [
+        "engagement", "campaigns", "targeting", "personalization", "automation",
+        "marketing", "customer retention", "segmentation"
+      ],
+      "benefits": [
+        "Targeted customer engagement",
+        "Automated campaign management",
+        "Personalized customer interactions",
+        "Campaign performance analytics"
+      ],
+      "use_cases": [
+        "Customer retention campaigns",
+        "Product promotion campaigns",
+        "Loyalty program management"
+      ]
+    }
+  ]
+}

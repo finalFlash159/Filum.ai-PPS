@@ -45,13 +45,9 @@ class FilumAgent:
                 use_enhanced_matching = False
         
         if not use_enhanced_matching:
-            # Fallback to basic matcher
-            from ..matching import FilumTextMatcher
-            self.text_matcher = FilumTextMatcher(knowledge_base_path)
-            
-            # Import here to avoid circular import
-            from .engine import FilumSolutionEngine
-            self.solution_engine = FilumSolutionEngine(self.text_matcher)
+            # Use basic fallback matcher
+            from .fallback import BasicMatcher
+            self.basic_matcher = BasicMatcher(knowledge_base_path)
         
         self.logger.info(f"Filum.ai Agent initialized with enhanced matching: {use_enhanced_matching}")
     
@@ -78,18 +74,23 @@ class FilumAgent:
                     "analysis": {}
                 }
             
-            # Use enhanced matching if available
             if self.use_enhanced_matching and hasattr(self, 'enhanced_matcher'):
                 return self._analyze_with_enhanced_matching(
                     pain_point_description, max_solutions
                 )
-            else:
-                # Fallback to solution engine
-                result = self.solution_engine.analyze_pain_point(
-                    pain_point_description=pain_point_description,
-                    max_solutions=max_solutions
+            elif hasattr(self, 'basic_matcher'):
+                # Use basic matcher directly
+                return self._analyze_with_basic_matching(
+                    pain_point_description, max_solutions
                 )
-                return result
+            else:
+                return {
+                    "status": "error",
+                    "message": "No matching system available",
+                    "pain_point": pain_point_description,
+                    "solutions": [],
+                    "analysis": {}
+                }
             
         except Exception as e:
             self.logger.error(f"Error in analyze_pain_point: {e}")
@@ -165,6 +166,70 @@ class FilumAgent:
                 return self.solution_engine.analyze_pain_point(pain_point_description, max_solutions)
             else:
                 raise
+    
+    def _analyze_with_basic_matching(self, pain_point_description: str, max_solutions: int) -> Dict[str, Any]:
+        """Analyze using basic matching"""
+        try:
+            # Get matches using basic matcher
+            matches = self.basic_matcher.find_matches(pain_point_description, max_solutions)
+            
+            if not matches:
+                return {
+                    "status": "success",
+                    "message": "No relevant solutions found for this pain point",
+                    "pain_point": pain_point_description,
+                    "solutions": [],
+                    "analysis": {
+                        "matching_method": "basic",
+                        "total_features_analyzed": len(self.basic_matcher.features) if self.basic_matcher.features else 0
+                    }
+                }
+            
+            # Convert matches to solution format
+            solutions = []
+            for match in matches:
+                solution = {
+                    "solution_name": match['feature'].get('name', 'Unknown'),
+                    "confidence_score": match['confidence_score'],
+                    "confidence_level": self._determine_basic_confidence_level(match['confidence_score']),
+                    "reasoning": match['match_explanation'],
+                    "feature": match['feature']
+                }
+                solutions.append(solution)
+            
+            # Generate analysis summary
+            analysis = {
+                "matching_method": "basic",
+                "total_features_analyzed": len(self.basic_matcher.features) if self.basic_matcher.features else 0,
+                "best_match_confidence": matches[0]['confidence_score'] if matches else 0.0
+            }
+            
+            return {
+                "status": "success",
+                "message": f"Found {len(solutions)} relevant solutions (basic matching)",
+                "pain_point": pain_point_description,
+                "solutions": solutions,
+                "analysis": analysis
+            }
+            
+        except Exception as e:
+            self.logger.error(f"Basic matching failed: {e}")
+            return {
+                "status": "error",
+                "message": f"Basic matching failed: {str(e)}",
+                "pain_point": pain_point_description,
+                "solutions": [],
+                "analysis": {}
+            }
+    
+    def _determine_basic_confidence_level(self, score: float) -> str:
+        """Determine confidence level for basic matching"""
+        if score >= 0.6:
+            return 'high'
+        elif score >= 0.3:
+            return 'medium'
+        else:
+            return 'low'
     
     def get_feature_details(self, feature_id: str) -> Optional[Dict[str, Any]]:
         """

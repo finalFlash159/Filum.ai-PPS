@@ -5,7 +5,7 @@ Core business logic for analyzing pain points and generating solution recommenda
 
 import logging
 from typing import Dict, Any, List, Optional
-from ..matching import FilumTextMatcher
+from .text_matcher import FilumTextMatcher
 
 class FilumSolutionEngine:
     """

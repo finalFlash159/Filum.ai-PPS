@@ -17,7 +17,7 @@ import sys
 import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
 
-from src.agent.engine import get_filum_agent, PainPointAgent
+from src.agent import get_filum_agent
 
 app = FastAPI(
     title="Filum.ai Pain Point Solution Agent API",

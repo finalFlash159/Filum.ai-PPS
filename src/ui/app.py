@@ -16,7 +16,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Import the Filum.ai agent directly for fallback
 try:
-    from agent.engine import get_filum_agent
+    from src.agent import get_filum_agent
     agent = get_filum_agent()
     USE_AGENT = True
 except ImportError:
@@ -30,53 +30,157 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Clean, modern CSS
+# Modern, professional CSS
 st.markdown("""
 <style>
+    /* Import Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+    
+    /* Reset and base styling */
+    html, body, [class*="css"] {
+        font-family: 'Poppins', sans-serif;
+    }
+    
     /* Main container styling */
     .main .block-container {
-        padding-top: 2rem;
+        padding-top: 1rem;
         padding-bottom: 2rem;
-        max-width: 1200px;
+        max-width: 1400px;
     }
     
     /* Header styling */
     .header-container {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 2rem;
-        border-radius: 15px;
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
+        padding: 2.5rem;
+        border-radius: 20px;
         color: white;
         text-align: center;
         margin-bottom: 2rem;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        box-shadow: 0 10px 30px rgba(79, 70, 229, 0.3);
     }
     
     .header-title {
-        font-size: 2.5rem;
+        font-size: 3rem;
         font-weight: 700;
         margin: 0;
         text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        background: linear-gradient(45deg, #ffffff, #f8fafc);
+        -webkit-background-clip: text;
+        background-clip: text;
     }
     
     .header-subtitle {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         margin: 0.5rem 0 0 0;
-        opacity: 0.9;
+        opacity: 0.95;
+        font-weight: 300;
     }
     
     /* Input section */
     .input-section {
         background: white;
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        border: 1px solid #e0e6ed;
+        padding: 2.5rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        border: 1px solid #e2e8f0;
         margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .input-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #4f46e5, #7c3aed, #ec4899);
     }
     
     .input-title {
-        color: #2c3e50;
-        font-size: 1.5rem;
+        color: #1e293b;
+        font-size: 1.6rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    /* Solution cards */
+    .solution-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 2rem;
+        margin: 1.5rem 0;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    
+    .solution-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(79, 70, 229, 0.15);
+        border-color: #4f46e5;
+    }
+    
+    .solution-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+    }
+    
+    .solution-title {
+        color: #1e293b;
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin: 0;
+        flex: 1;
+        line-height: 1.4;
+    }
+    
+    .confidence-badge {
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-align: center;
+        min-width: 100px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        margin-left: 1rem;
+    }
+    
+    .confidence-high {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+    }
+    
+    .confidence-medium {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+    }
+    
+    .confidence-low {
+        background: linear-gradient(135deg, #6b7280, #4b5563);
+        color: white;
+    }
+    
+    /* Score visualization */
+    .score-section {
+        margin: 1.5rem 0;
+        padding: 1.5rem;
+        background: #f8fafc;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+    }
+    
+    .score-title {
+        color: #374151;
+        font-size: 1.1rem;
         font-weight: 600;
         margin-bottom: 1rem;
         display: flex;
@@ -84,77 +188,75 @@ st.markdown("""
         gap: 0.5rem;
     }
     
-    /* Solution cards */
-    .solution-card {
-        background: white;
-        border: 1px solid #e0e6ed;
-        border-radius: 12px;
-        padding: 1.5rem;
-        margin: 1rem 0;
-        transition: all 0.3s ease;
-        position: relative;
+    .score-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.8rem;
+    }
+    
+    .score-label {
+        font-size: 0.9rem;
+        color: #4b5563;
+        font-weight: 500;
+        min-width: 120px;
+    }
+    
+    .score-bar-container {
+        flex: 1;
+        margin: 0 1rem;
+        background: #e5e7eb;
+        border-radius: 10px;
+        height: 8px;
         overflow: hidden;
     }
     
-    .solution-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        border-color: #667eea;
+    .score-bar {
+        height: 100%;
+        border-radius: 10px;
+        transition: width 0.6s ease-in-out;
+        background: linear-gradient(90deg, #4f46e5, #7c3aed);
     }
     
-    .solution-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 1rem;
-    }
-    
-    .solution-title {
-        color: #2c3e50;
-        font-size: 1.3rem;
+    .score-value {
+        font-size: 0.85rem;
+        color: #374151;
         font-weight: 600;
-        margin: 0;
-        flex: 1;
+        min-width: 45px;
+        text-align: right;
     }
     
-    .confidence-badge {
+    /* Keywords section */
+    .keywords-section {
+        margin: 1rem 0;
+    }
+    
+    .keyword-tag {
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        color: white;
         padding: 0.4rem 0.8rem;
         border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        text-align: center;
-        min-width: 90px;
-        margin-left: 1rem;
-    }
-    
-    .confidence-high {
-        background: linear-gradient(135deg, #4CAF50, #45a049);
-        color: white;
-    }
-    
-    .confidence-medium {
-        background: linear-gradient(135deg, #FF9800, #f57c00);
-        color: white;
-    }
-    
-    .confidence-low {
-        background: linear-gradient(135deg, #9E9E9E, #757575);
-        color: white;
+        font-size: 0.8rem;
+        margin: 0.2rem 0.3rem 0.2rem 0;
+        display: inline-block;
+        font-weight: 500;
+        box-shadow: 0 2px 4px rgba(79, 70, 229, 0.3);
     }
     
     .category-tags {
-        margin: 0.5rem 0;
+        margin: 0.8rem 0;
     }
     
     .category-tag {
-        background: #f8f9fa;
-        color: #495057;
-        padding: 0.3rem 0.8rem;
-        border-radius: 20px;
+        background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+        color: #374151;
+        padding: 0.4rem 0.9rem;
+        border-radius: 25px;
         font-size: 0.8rem;
-        margin-right: 0.5rem;
+        margin-right: 0.6rem;
         display: inline-block;
-        border: 1px solid #dee2e6;
+        border: 1px solid #d1d5db;
+        font-weight: 500;
     }
     
     .solution-content {
@@ -278,11 +380,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 def display_header():
-    """Display clean, modern header"""
+    """Display beautiful, modern header"""
     st.markdown("""
     <div class="header-container">
         <h1 class="header-title">🎯 Filum.ai Solution Finder</h1>
-        <p class="header-subtitle">Find the right technology solutions for your business challenges</p>
+        <p class="header-subtitle">Powered by AI • Find the perfect technology solutions for your business challenges</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -295,28 +397,76 @@ def get_confidence_info(confidence: float) -> tuple:
     else:
         return "confidence-low", "Possible Match", ""
 
+def render_score_visualization(solution: Dict[str, Any]):
+    """Render beautiful score breakdown visualization"""
+    layer_breakdown = solution.get("layer_breakdown", {})
+    matched_keywords = solution.get("matched_keywords", [])
+    
+    if not layer_breakdown:
+        return
+    
+    # Score mapping with icons and colors
+    score_config = {
+        "exact_match": {"label": "🎯 Exact Match", "color": "#10b981"},
+        "fuzzy_match": {"label": "🔍 Fuzzy Match", "color": "#3b82f6"}, 
+        "semantic_match": {"label": "🧠 Semantic Match", "color": "#8b5cf6"},
+        "domain_match": {"label": "🏢 Domain Match", "color": "#f59e0b"},
+        "intent_match": {"label": "💭 Intent Match", "color": "#ef4444"}
+    }
+    
+    st.markdown("""
+    <div class="score-section">
+        <div class="score-title">📊 Matching Score Breakdown</div>
+    """, unsafe_allow_html=True)
+    
+    # Render each score
+    for score_key, config in score_config.items():
+        score_value = layer_breakdown.get(score_key, 0.0)
+        percentage = score_value * 100
+        
+        st.markdown(f"""
+        <div class="score-item">
+            <div class="score-label">{config['label']}</div>
+            <div class="score-bar-container">
+                <div class="score-bar" style="width: {percentage}%; background: {config['color']};"></div>
+            </div>
+            <div class="score-value">{percentage:.1f}%</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Keywords section
+    if matched_keywords:
+        st.markdown('<div class="keywords-section">', unsafe_allow_html=True)
+        st.markdown("**🔑 Matched Keywords:**")
+        for keyword in matched_keywords:
+            st.markdown(f'<span class="keyword-tag">{keyword}</span>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+    
+    st.markdown("</div>", unsafe_allow_html=True)
+
 def display_solution_card(solution: Dict[str, Any], index: int):
-    """Display clean solution card"""
+    """Display solution card with clear info hierarchy"""
+    
+    # Debug: Check what data we have
     feature = solution.get("feature", {})
     confidence = solution.get("confidence_score", 0.0)
     
-    # Get solution name
-    solution_name = (solution.get('solution_name') or 
-                    feature.get('name') or 
-                    'Unknown Solution')
+    # Get clear solution info with fallbacks
+    solution_name = feature.get('name') or solution.get('solution_name') or f"Solution #{index + 1}"
+    category = feature.get("category") or solution.get("category") or "Uncategorized"
+    subcategory = feature.get("subcategory") or solution.get("subcategory") or ""
+    description = feature.get("description") or solution.get("description") or ""
     
     # Get confidence info
     confidence_class, confidence_label, confidence_icon = get_confidence_info(confidence)
     
-    # Categories
-    category = solution.get("category") or feature.get("category", "")
-    subcategory = solution.get("subcategory") or feature.get("subcategory", "")
-    
-    # Card HTML
+    # 🎯 SECTION 1: Solution Header & Basic Info (HTML STYLED)
     st.markdown(f"""
     <div class="solution-card">
         <div class="solution-header">
-            <h3 class="solution-title">{confidence_icon} {solution_name}</h3>
+            <h2 style="color: #1e293b; font-size: 1.8rem; font-weight: 700; margin: 0; line-height: 1.3;">
+                {confidence_icon} {solution_name}
+            </h2>
             <div class="confidence-badge {confidence_class}">
                 {confidence_label}<br>
                 <small>{confidence:.0%}</small>
@@ -325,80 +475,119 @@ def display_solution_card(solution: Dict[str, Any], index: int):
     </div>
     """, unsafe_allow_html=True)
     
-    # Display category tags using simple text
-    if category or subcategory:
-        tags = []
-        if category:
-            tags.append(f"📂 {category}")
-        if subcategory:
-            tags.append(f"📋 {subcategory}")
-        st.caption(" • ".join(tags))
-    
-    # Content in expandable sections
-    col1, col2 = st.columns([2, 1])
+    # 🏷️ SECTION 2: Category Information (HTML STYLED)
+    st.markdown("### 📂 Solution Category")
+    col1, col2 = st.columns([1, 2])
     
     with col1:
-        # How it helps
-        how_it_helps = solution.get("how_it_helps", "")
-        if how_it_helps:
-            st.markdown(f"""
-            <div class="help-section">
-                <div class="help-title">💡 How this helps</div>
-                <p>{how_it_helps}</p>
-            </div>
-            """, unsafe_allow_html=True)
-        else:
-            # Debug: show what data we have
-            st.write("**Available data:**")
-            st.json({k: v for k, v in solution.items() if k not in ['feature']})
-        
-        # Description
-        description = feature.get("description", "")
-        if description:
-            with st.expander("📖 Feature Details"):
-                st.write(description)
+        st.markdown(f"""
+        <div style="background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; padding: 1rem; border-radius: 15px; text-align: center; margin: 0.5rem 0;">
+            <div style="font-size: 1.1rem; font-weight: 600;">📂 {category}</div>
+            {f'<div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.9;">📋 {subcategory}</div>' if subcategory else ''}
+        </div>
+        """, unsafe_allow_html=True)
     
     with col2:
-        # Implementation suggestion
-        implementation = solution.get("implementation_suggestion", "")
-        if implementation:
-            st.markdown(f"""
-            <div class="help-section">
-                <div class="help-title">🚀 Implementation</div>
-                <p><small>{implementation}</small></p>
-            </div>
-            """, unsafe_allow_html=True)
-        
-        # Benefits
-        benefits = feature.get("benefits", [])
-        if benefits:
-            with st.expander("✅ Benefits"):
-                for benefit in benefits[:4]:
-                    st.write(f"• {benefit}")
+        if description:
+            st.markdown("**📝 Description:**")
+            st.write(description)
+        else:
+            st.warning("Description not available")
     
-    # Close the solution card
-    st.markdown("</div>", unsafe_allow_html=True)
+    # 🎯 SECTION 3: Pain Points & Solution (SIMPLE & CLEAR VERSION)
+    pain_points = feature.get("pain_points_addressed", [])
+    if pain_points:
+        st.markdown("### 🎯 Pain Points This Solves")
+        
+        # Create formatted pain points with better spacing
+        pain_points_formatted = []
+        for pain_point in pain_points:
+            pain_points_formatted.append(f"• **{pain_point.capitalize()}**")
+        
+        pain_points_text = "\n\n".join(pain_points_formatted)  # Double line break for better spacing
+        
+        # Use info box with markdown formatting for white background
+        st.info(f"""**🔴 Pain Points:**
+
+{pain_points_text}
+
+---
+
+**✅ Filum.ai Solution:**  
+**{solution_name}**
+
+**📂 Category:** {category}{f" - {subcategory}" if subcategory else ""}
+
+**💡 How it helps:**  
+{description if description else "Provides comprehensive solution for these business challenges"}
+        """)
+    
+    # 📊 SECTION 4: Matching Score Breakdown (MOVED TO BOTTOM)
+    st.markdown("### 📊 AI Matching Analysis")
+    with st.expander("🔍 View Detailed Matching Scores", expanded=False):
+        render_score_visualization(solution)
+    
+    # Implementation info (KEEP ONLY THIS)
+    how_it_helps = solution.get("how_it_helps", "")
+    implementation = solution.get("implementation_suggestion", "")
+    
+    if how_it_helps or implementation:
+        with st.expander("🚀 Implementation Details"):
+            if how_it_helps:
+                st.markdown(f"**💡 How this helps:** {how_it_helps}")
+            if implementation:
+                st.markdown(f"**🛠️ Implementation suggestion:** {implementation}")
 
 def display_examples_sidebar():
     """Display example pain points in sidebar"""
-    st.sidebar.markdown("### 💡 Common Business Challenges")
+    st.sidebar.markdown("### 💡 Example Business Challenges")
+    st.sidebar.markdown("*Click any example to try it*")
     
     examples = [
-        "Customers complain frequently but we don't know how to collect feedback",
-        "Customer service team is overwhelmed, need automation",
-        "Want to better understand customer behavior and needs",
-        "Need detailed customer data reports and analytics",
-        "Manual complaint handling process is slow and inefficient"
+        {
+            "title": "📊 Customer Feedback Collection", 
+            "pain_point": "It's difficult to collect customer feedback consistently after purchases across multiple channels like web, mobile, and in-store.",
+            "expected": "→ Automated Post-Purchase Surveys (Voice of Customer - Surveys)"
+        },
+        {
+            "title": "👥 Customer Profile Management",
+            "pain_point": "It's difficult to get a single view of a customer's interaction history when they contact us.",
+            "expected": "→ Customer Profile with Interaction History (Customer 360 - Customers)"
+        },
+        {
+            "title": "🔍 Survey Analysis",
+            "pain_point": "Manually analyzing thousands of open-ended survey responses for common themes is too time-consuming.",
+            "expected": "→ AI-Powered Topic & Sentiment Analysis (VoC - Insights)"
+        },
+        {
+            "title": "📞 Customer Service Automation",
+            "pain_point": "Customer service team is overwhelmed with repetitive questions and needs automation to handle common inquiries.",
+            "expected": "→ AI Inbox FAQ Management (AI Inbox - FAQ)"
+        },
+        {
+            "title": "📈 Business Performance Tracking",
+            "pain_point": "We need better insights into our operational performance and customer satisfaction metrics.",
+            "expected": "→ Operational Performance Analytics (Insights - Performance)"
+        }
     ]
     
     for example in examples:
-        if st.sidebar.button(
-            example, 
-            key=f"example_{hash(example)}", 
-            help="Click to try this example"
-        ):
-            st.session_state.pain_point_input = example
-            st.rerun()
+        with st.sidebar.container():
+            st.markdown(f"""
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1rem; margin: 0.5rem 0; cursor: pointer; transition: all 0.2s ease;">
+                <div style="font-weight: 600; color: #4f46e5; margin-bottom: 0.5rem; font-size: 0.9rem;">{example['title']}</div>
+                <div style="font-size: 0.8rem; color: #64748b; line-height: 1.4; margin-bottom: 0.5rem;">{example['pain_point'][:80]}...</div>
+                <div style="font-size: 0.75rem; color: #059669; font-style: italic;">{example['expected']}</div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            if st.sidebar.button(
+                "Try This Example", 
+                key=f"example_{hash(example['pain_point'])}", 
+                use_container_width=True
+            ):
+                st.session_state.pain_point_input = example['pain_point']
+                st.rerun()
 
 def display_loading():
     """Display loading animation"""
@@ -482,51 +671,60 @@ def main():
     if 'pain_point_input' not in st.session_state:
         st.session_state.pain_point_input = ""
     
-    # Input section
+    # Input section with beautiful styling
     st.markdown("""
     <div class="input-section">
         <div class="input-title">
-            📝 Describe your business challenge
+            📝 Describe Your Business Challenge
         </div>
+        <p style="color: #64748b; margin-bottom: 1.5rem; font-size: 0.95rem;">
+            Tell us about your business problem and we'll find the perfect Filum.ai solution for you.
+        </p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Text input
+    # Text input with better styling
     pain_point = st.text_area(
         "Challenge description:",
         value=st.session_state.pain_point_input,
-        placeholder="Example: We are struggling to collect and analyze customer feedback after purchases...",
-        height=100,
+        placeholder="Example: We are struggling to collect and analyze customer feedback efficiently. Our current process is manual and takes too much time...",
+        height=120,
         key="pain_point_main",
-        label_visibility="collapsed"
+        label_visibility="collapsed",
+        help="Be specific about your challenge - the more detail you provide, the better our recommendations will be!"
     )
     
-    # Action buttons
-    col1, col2, col3 = st.columns([2, 1, 1])
+    # Action buttons with better layout
+    col1, col2, col3, col4 = st.columns([3, 1, 1, 1])
     
     with col1:
         analyze_button = st.button(
-            "🔍 Find Solutions", 
+            "🔍 Find Perfect Solutions", 
             type="primary",
-            use_container_width=True
+            use_container_width=True,
+            help="Analyze your challenge and find matching solutions"
         )
     
     with col2:
         clear_button = st.button("🗑️ Clear", use_container_width=True)
         
     with col3:
-        if st.button("📞 Consult", use_container_width=True):
-            st.info("📞 Contact: 1900-XXX-XXX or email: contact@filum.ai")
+        if st.button("� Examples", use_container_width=True):
+            st.info("Check the sidebar for example challenges you can try!")
+            
+    with col4:
+        if st.button("�📞 Consult", use_container_width=True):
+            st.success("📞 **Contact Us:**\n\n📧 Email: contact@filum.ai\n📱 Phone: 1900-XXX-XXX")
     
     if clear_button:
         st.session_state.pain_point_input = ""
         st.rerun()
     
-    # Analysis
+    # Analysis with improved UX
     if analyze_button and pain_point.strip():
-        with st.spinner(""):
+        with st.spinner("🔍 Analyzing your challenge and finding the best solutions..."):
             display_loading()
-            time.sleep(1)  # Simulate processing time
+            time.sleep(1.5)  # Simulate processing time
             
             result = analyze_pain_point(pain_point.strip())
             
@@ -534,12 +732,13 @@ def main():
                 solutions = result.get("solutions", [])
                 
                 if solutions:
-                    st.success(f"✅ Found {len(solutions)} suitable solutions!")
+                    st.success(f"✅ **Great news!** Found {len(solutions)} perfect solution{'' if len(solutions) == 1 else 's'} for your challenge!")
                     
                     # Display stats
                     display_stats(solutions)
                     
                     st.markdown("### 🎯 Recommended Solutions")
+                    st.markdown("*Solutions are ranked by relevance to your specific challenge*")
                     
                     # Display solutions
                     for i, solution in enumerate(solutions):
@@ -549,7 +748,16 @@ def main():
                             st.markdown("---")
                 
                 else:
-                    st.warning("🤔 No suitable solutions found. Try describing in more detail or contact for consultation.")
+                    st.warning("🤔 **No exact matches found.** Try describing your challenge in more detail or contact our team for personalized consultation.")
+                    
+                    # Suggest what to do next
+                    st.markdown("""
+                    **💡 Tips for better results:**
+                    - Be more specific about your industry or use case
+                    - Mention the scale of your problem (small team vs enterprise)
+                    - Include what you've tried before
+                    - Describe the impact on your business
+                    """)
             
             else:
                 st.error(f"❌ {result.get('message', 'An error occurred')}")

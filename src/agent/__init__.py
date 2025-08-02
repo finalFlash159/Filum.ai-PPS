@@ -4,31 +4,29 @@ Main package for Filum.ai Pain Point Solution Agent
 """
 
 from .agent import FilumAgent
-from .engine import FilumSolutionEngine, get_filum_agent, PainPointAgent
 
 __version__ = "1.0.0"
-
-__all__ = ['FilumAgent', 'FilumSolutionEngine', 'get_filum_agent', 'PainPointAgent']
 __author__ = "Filum.ai Team"
 
-def create_agent() -> FilumAgent:
+def get_filum_agent(use_enhanced_matching: bool = True) -> FilumAgent:
     """
     Factory function to create a configured Filum.ai agent
     
+    Args:
+        use_enhanced_matching: Whether to use enhanced 5-layer matching
+        
     Returns:
         FilumAgent: Configured agent ready for pain point analysis
     """
-    return FilumAgent()
+    return FilumAgent(use_enhanced_matching=use_enhanced_matching)
 
-# Legacy compatibility
-def get_filum_agent() -> FilumAgent:
+# Legacy compatibility - keep for backward compatibility
+def create_agent() -> FilumAgent:
     """Legacy function for backward compatibility"""
-    return create_agent()
+    return get_filum_agent()
 
 __all__ = [
     'FilumAgent',
-    'FilumTextMatcher', 
-    'FilumSolutionEngine',
-    'create_agent',
-    'get_filum_agent'
+    'get_filum_agent', 
+    'create_agent'
 ]

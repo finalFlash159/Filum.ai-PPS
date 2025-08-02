@@ -1,9 +1,8 @@
 """
 Matching Module
-Handles different matching algorithms for pain point to solution mapping
+Handles pain point to solution matching with 5-layer semantic analysis
 """
 
-from .enhanced import EnhancedFilumMatcher, MatchResult
-from .basic import FilumTextMatcher
+from .matcher import EnhancedFilumMatcher, MatchResult
 
-__all__ = ['EnhancedFilumMatcher', 'MatchResult', 'FilumTextMatcher']
+__all__ = ['EnhancedFilumMatcher', 'MatchResult']
